@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Cachimbada de Ingeniería Ambiental | Noche de Antifaces</title><!-- aqui coloca los logos : "l"ogo_epiam" y"logo_unajma" -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            950: '#022c22',
+                            900: '#064e3b',
+                            800: '#065f46',
+                            500: '#10b981',
+                            400: '#34d399',
+                        },
+                        gold: {
+                            100: '#fef9c3',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        },
+                        petrol: {
+                            900: '#031b26',
+                            800: '#082f49',
+                            700: '#0c4a6e',
+                        },
+                        darknight: '#030712'
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%)',
+                        'emerald-gradient': 'linear-gradient(135deg, #064e3b 0%, #022c22 50%, #082f49 100%)',
+                        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)',
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite ease-in-out',
+                        'float': 'float 6s infinite ease-in-out',
+                        'shine': 'shine 3s infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 15px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 30px rgba(234, 179, 8, 0.3))' },
+                            '50%': { filter: 'drop-shadow(0 0 25px rgba(16, 185, 129, 0.9)) drop-shadow(0 0 45px rgba(234, 179, 8, 0.6))' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        },
+                        shine: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Metallic Text Gradient */
+        .text-gold-metallic {
+            background: linear-gradient(135deg, #fef08a 0%, #eab308 30%, #ca8a04 70%, #fef08a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        .text-emerald-neon {
+            background: linear-gradient(135deg, #6ee7b7 0%, #10b981 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(6, 46, 34, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(234, 179, 8, 0.6);
+            box-shadow: 0 20px 40px 0 rgba(16, 185, 129, 0.25), 0 0 20px rgba(234, 179, 8, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #022c22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#10b981, #ca8a04);
+            border-radius: 4px;
+        }
+
+        /* Canvas Overlay */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-darknight text-slate-100 font-montserrat min-h-screen relative overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900">
+
+    <!-- Floating Leaves & Sparkles Background Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Sticky Glass Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-lg bg-darknight/80 border-b border-gold-500/20" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <img src="logo_epiam.png" alt="Logo EPIAM" class="w-12 h-12 object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.5)] group-hover:scale-110 transition-transform" onerror="this.style.visibility='hidden'">
+                <div>
+                    <span class="font-cinzel font-bold text-lg text-gold-metallic tracking-wider block leading-none">CACHIMBADA</span>
+                    <span class="text-[10px] tracking-[0.25em] text-emerald-400 font-semibold uppercase">Ingeniería Ambiental</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-cinzel text-sm uppercase tracking-wider font-semibold text-slate-300">
+                <a href="#concepto" class="hover:text-gold-400 transition-colors">Concepto</a>
+                <a href="#dresscode" class="hover:text-gold-400 transition-colors">Antifaces</a>
+                <a href="#cronograma" class="hover:text-gold-400 transition-colors">Cronograma</a>
+                <a href="#entradas" class="hover:text-gold-400 transition-colors">Entradas</a>
+                <a href="#ubicacion" class="hover:text-gold-400 transition-colors">Ubicación</a>
+                <a href="#contacto" class="hover:text-gold-400 transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex items-center gap-3">
+                <button id="musicToggleBtn" onclick="toggleAudioPreview()" class="w-10 h-10 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-400 hover:text-gold-300 hover:border-gold-400 flex items-center justify-center transition-all shadow-md" title="Música de ambiente">
+                    <i class="fa-solid fa-music text-sm" id="musicIcon"></i>
+                </button>
+                <a href="#entradas" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-gold-600 text-slate-950 font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center gap-2">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span class="hidden sm:inline">Pases VIP</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 pt-20">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="min-h-[92vh] flex items-center justify-center relative px-4 py-16 overflow-hidden">
+            <!-- Background Radial Glows -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-gold-500/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
+                
+                <!-- Badge Event Date -->
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-950/80 border border-gold-400/40 shadow-[0_0_30px_rgba(234,179,8,0.25)] animate-float">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <i class="fa-solid fa-calendar-days text-gold-400 text-sm"></i>
+                    <span class="font-cinzel text-xs sm:text-sm tracking-[0.2em] text-gold-300 uppercase font-bold">16 DE OCTUBRE | ASIA MOLUSKIN 7:00pm</span>
+                </div>
+
+                <!-- Antifaz de gala + logo UNAJMA -->
+                <div class="flex items-center justify-center gap-3 sm:gap-10 my-4">
+                    <div class="w-14 sm:w-28" aria-hidden="true"></div>
+                    <div class="w-44 sm:w-72 animate-pulse-glow transition-transform hover:scale-105 duration-500 cursor-pointer" onclick="triggerMaskSparkles(event)">
+                        <svg viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" style="overflow:visible" role="img" aria-label="Antifaz de gala esmeralda y oro">
+                            <defs>
+                                <linearGradient id="maskBg" x1="0" y1="0" x2="520" y2="240" gradientUnits="userSpaceOnUse"><stop stop-color="#064e3b"/><stop offset=".5" stop-color="#022c22"/><stop offset="1" stop-color="#082f49"/></linearGradient>
+                                <linearGradient id="goldBorder" x1="0" y1="0" x2="520" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#bf953f"/><stop offset=".3" stop-color="#fcf6ba"/><stop offset=".7" stop-color="#b38728"/><stop offset="1" stop-color="#aa771c"/></linearGradient>
+                                <linearGradient id="emeraldGlow" x1="0" y1="78" x2="0" y2="110" gradientUnits="userSpaceOnUse"><stop stop-color="#34d399"/><stop offset="1" stop-color="#065f46"/></linearGradient>
+                                <path id="hs" d="M260 112C220 112 150 92 96 62C60 42 34 30 14 26C44 66 28 132 74 178C118 226 206 240 260 198"/>
+                                <g id="mh">
+                                    <use href="#hs" fill="url(#maskBg)"/>
+                                    <path d="M104 86C124 76 150 84 160 102C142 108 118 104 104 86Z" fill="url(#emeraldGlow)"/>
+                                    <path d="M170 110C198 116 226 122 248 128M100 186C136 214 210 224 250 192" stroke="#fde047" stroke-width="3" stroke-dasharray="1 8" stroke-linecap="round"/>
+                                    <path d="M112 128C142 126 182 138 206 166C176 172 132 160 112 128Z" fill="#030712" stroke="url(#goldBorder)" stroke-width="3.5" stroke-linejoin="miter"/>
+                                    <use href="#hs" fill="none" stroke="url(#goldBorder)" stroke-width="6" stroke-linejoin="miter" stroke-miterlimit="8"/>
+                                    <circle cx="34" cy="58" r="3.5" fill="#facc15"/><circle cx="84" cy="166" r="3" fill="#10b981"/>
+                                </g>
+                            </defs>
+                            <use href="#mh"/>
+                            <use href="#mh" transform="translate(520 0) scale(-1 1)"/>
+                            <path d="M260 12L274 72L310 34L288 98L260 126L232 98L210 34L246 72Z" fill="url(#goldBorder)" stroke="#a16207" stroke-width="1.5" stroke-linejoin="miter"/>
+                            <circle cx="260" cy="20" r="6" fill="#10b981"/><circle cx="210" cy="38" r="4" fill="#facc15"/><circle cx="310" cy="38" r="4" fill="#facc15"/>
+                        </svg>
+                    </div>
+                    <img src="logo_unajma.png" alt="Logo UNAJMA" class="w-14 sm:w-28 h-auto object-contain drop-shadow-[0_0_12px_rgba(234,179,8,0.45)]" onerror="this.style.visibility='hidden'">
+                </div>
+
+                <!-- Title Header -->
+                <div>
+                    <h2 class="font-cinzel text-base sm:text-xl text-emerald-400 font-semibold tracking-[0.3em] uppercase mb-2">Gran Bienvenida Cachimbo 2026-2</h2>
+                    <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-black text-gold-metallic tracking-tight uppercase leading-none drop-shadow-lg">
+                        GRAN CACHIMBADA EPIAM 2026-2
+                    </h1>
+                    <p class="font-playfair italic text-lg sm:text-2xl text-slate-300 mt-3 max-w-2xl mx-auto">
+                        "Donde la magia de la naturaleza se viste de gala, misterio y elegancia eco-luxe"
+                    </p>
+                </div>
+
+                <!-- Real-time Countdown Timer Grid -->
+                <div class="pt-4">
+                    <p class="text-xs uppercase tracking-[0.25em] text-emerald-400 font-semibold mb-4">La cuenta regresiva ha comenzado:</p>
+                    <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-xl mx-auto">
+                        <div class="glass-card rounded-2xl p-3 sm:p-4 border border-gold-500/30 text-center">
+                            <span id="timerDays" class="block font-cinzel text-2xl sm:text-4xl font-bold text-gold-300">00</span>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Días</span>
+                        </div>
+                        <div class="glass-card rounded-2xl p-3 sm:p-4 border border-gold-500/30 text-center">
+                            <span id="timerHours" class="block font-cinzel text-2xl sm:text-4xl font-bold text-gold-300">00</span>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Horas</span>
+                        </div>
+                        <div class="glass-card rounded-2xl p-3 sm:p-4 border border-gold-500/30 text-center">
+                            <span id="timerMinutes" class="block font-cinzel text-2xl sm:text-4xl font-bold text-gold-300">00</span>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Minutos</span>
+                        </div>
+                        <div class="glass-card rounded-2xl p-3 sm:p-4 border border-gold-500/30 text-center">
+                            <span id="timerSeconds" class="block font-cinzel text-2xl sm:text-4xl font-bold text-emerald-400">00</span>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Segundos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call To Actions -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+                    <a href="#entradas" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-gold-500 via-amber-400 to-gold-600 text-slate-950 font-cinzel font-bold text-sm uppercase tracking-wider hover:brightness-110 transition-all transform hover:-translate-y-1 shadow-[0_0_30px_rgba(234,179,8,0.5)] flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                        <span>Reservar Mi Entrada</span>
+                    </a>
+                    <a href="#dresscode" class="w-full sm:w-auto px-8 py-4 rounded-full glass-card hover:bg-emerald-900/40 text-gold-300 border border-gold-400/40 font-cinzel font-semibold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-mask"></i>
+                        <span>Ver Código de Vestimenta</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONCEPTO & EXPERIENCIA SECTION -->
+        <section id="concepto" class="py-20 px-4 relative max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-bold">El Ambiente se enciende!</span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-gold-metallic mt-2 mb-4">La Noche de Aura inolvidable</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-emerald-500 to-gold-500 mx-auto rounded-full"></div>
+                <p class="text-slate-300 mt-6 leading-relaxed text-base sm:text-lg">
+                    La <strong class="text-gold-300">Cachimbada de Ingeniería Ambiental 2026-2</strong> transforma la noche en una atmósfera cautivadora donde la majestuosidad de la naturaleza silvestre se abraza con el lujo de las noches venecianas de antifaces. Prepara tus sentidos para una inmersión completa.
+                </p>
+            </div>
+
+            <!-- Feature Highlight Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center relative overflow-hidden group">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center mx-auto mb-6 text-gold-400 text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-gold-300 mb-3">Elegancia & Misterio</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Antifaces intervenidos con elementos florales, texturas orgánicas, dorados deslumbrantes y detalles bio-iluminados para ocultar tu identidad hasta la medianoche.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center relative overflow-hidden group border-gold-400/50">
+                    <div class="absolute top-0 right-0 bg-gold-500 text-slate-950 font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-bl-xl">Principal</div>
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-950 border border-gold-400/60 flex items-center justify-center mx-auto mb-6 text-emerald-400 text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-gold-300 mb-3">Ritual de Iniciación Cachimbo</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        El juramento ceremonial del codigo 2026. Un espectáculo de bienvenida repleto de efectos visuales, neón botánico y coronación oficial de nuestros Miss y Mister Cachimbo EPIAM-2026-2.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center relative overflow-hidden group">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center mx-auto mb-6 text-gold-400 text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-gold-300 mb-3">Fiesta Bioluminosa</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Hora loca futurista con DJ en vivo, pintura reactiva UV, lásers color esmeralda y la mejor selección musical para bailar hasta el amanecer.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DRESS CODE / INTERACTIVE MASK SELECTOR SECTION -->
+        <section id="dresscode" class="py-20 px-4 bg-gradient-to-b from-transparent via-emerald-950/40 to-transparent">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-bold">Código de Vestimenta</span>
+                    <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-gold-metallic mt-2">Estilos de Antifaz Recomendados</h2>
+                    <p class="text-slate-300 mt-4 text-sm sm:text-base">
+                        Se requiere vestimenta elegante / semi-formal acompañada de un antifaz de inspiraciones eco-místicas o de gala. ¡Explora los estilos interactivamente!
+                    </p>
+                </div>
+
+                <!-- Dynamic Mask Customizer / Inspiration Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Mask Style 1 -->
+                    <div class="glass-card rounded-2xl p-6 text-center border-emerald-500/30 hover:border-gold-400 transition-all cursor-pointer group" onclick="selectMaskInspiration('Esmeralda Mística', 'Verde esmeralda profundo con destellos de oro y cristales finos.')">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-emerald-900/60 border border-emerald-400/50 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                            <i class="fa-solid fa-mask text-3xl text-emerald-400"></i>
+                        </div>
+                        <h4 class="font-cinzel font-bold text-lg text-gold-300">Esmeralda Mística</h4>
+                        <p class="text-xs text-slate-400 mt-2">Tonos verde esmeralda con plumas o relieves botánicos dorados.</p>
+                        <span class="inline-block mt-4 text-xs text-emerald-400 font-semibold underline">Ver Detalle &rarr;</span>
+                    </div>
+
+                    <!-- Mask Style 2 -->
+                    <div class="glass-card rounded-2xl p-6 text-center border-gold-500/40 hover:border-gold-300 transition-all cursor-pointer group" onclick="selectMaskInspiration('Dorado Botánico', 'Estructura dorada en forma de hojas de laurel, enredaderas y destellos neón.')">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gold-950/60 border border-gold-400/60 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                            <i class="fa-solid fa-crown text-3xl text-gold-400"></i>
+                        </div>
+                        <h4 class="font-cinzel font-bold text-lg text-gold-300">Dorado Botánico</h4>
+                        <p class="text-xs text-slate-400 mt-2">Hojas de laurel doradas, motivos de flora exótica y acabados brillantes.</p>
+                        <span class="inline-block mt-4 text-xs text-gold-400 font-semibold underline">Ver Detalle &rarr;</span>
+                    </div>
+
+                    <!-- Mask Style 3 -->
+                    <div class="glass-card rounded-2xl p-6 text-center border-petrol-700 hover:border-emerald-400 transition-all cursor-pointer group" onclick="selectMaskInspiration('Eco-Luxe Neón', 'Detalles bio-luminosos fluorescentes que brillan bajo la luz UV de la medianoche.')">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-petrol-900 border border-emerald-400 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                            <i class="fa-solid fa-wand-magic-sparkles text-3xl text-emerald-300"></i>
+                        </div>
+                        <h4 class="font-cinzel font-bold text-lg text-gold-300">Eco-Luxe Neón</h4>
+                        <p class="text-xs text-slate-400 mt-2">Acentos reactivos a la luz negra UV para destacar durante la Hora Loca.</p>
+                        <span class="inline-block mt-4 text-xs text-emerald-400 font-semibold underline">Ver Detalle &rarr;</span>
+                    </div>
+
+                    <!-- Mask Style 4 -->
+                    <div class="glass-card rounded-2xl p-6 text-center border-slate-700 hover:border-gold-400 transition-all cursor-pointer group" onclick="selectMaskInspiration('Obsidiana Noche', 'Elegancia sobria en negro satinado con sutiles toques esmeralda.')">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-darknight border border-slate-600 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                            <i class="fa-solid fa-user-ninja text-3xl text-slate-200"></i>
+                        </div>
+                        <h4 class="font-cinzel font-bold text-lg text-gold-300">Obsidiana Noche</h4>
+                        <p class="text-xs text-slate-400 mt-2">Base en negro aterciopelado u obsidiana con encajes de alta costura.</p>
+                        <span class="inline-block mt-4 text-xs text-gold-400 font-semibold underline">Ver Detalle &rarr;</span>
+                    </div>
+
+                </div>
+
+                <!-- Dynamic Preview Banner -->
+                <div id="maskDetailBanner" class="mt-8 glass-card rounded-2xl p-6 hidden flex-col md:flex-row items-center justify-between gap-4 border-emerald-400/60 bg-emerald-950/60">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <h4 id="maskDetailTitle" class="font-cinzel font-bold text-gold-300 text-lg">Estilo Seleccionado</h4>
+                            <p id="maskDetailDesc" class="text-sm text-slate-300">Haz clic en un estilo para explorar sus atributos.</p>
+                        </div>
+                    </div>
+                    <button onclick="openRSVPModalWithMask()" class="px-6 py-2.5 rounded-full bg-gold-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-gold-400 transition-colors whitespace-nowrap">
+                        Reservar Entrada con este Estilo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CRONOGRAMA & LINE-UP SECTION -->
+        <section id="cronograma" class="py-20 px-4 max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-bold">Programación Oficial</span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-gold-metallic mt-2">Cronograma de 16 de Octubre desde las 9:00 AM</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-emerald-500 to-gold-500 mx-auto rounded-full mt-4"></div>
+            </div>
+
+            <!-- Timeline Vertical -->
+            <div class="relative border-l-2 border-gold-500/30 ml-4 md:ml-32 space-y-12">
+                
+
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-gold-400 flex items-center justify-center text-gold-400 shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        9:00 AM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 font-semibold text-[10px] uppercase tracking-wider">Apertura de Puertas</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Corte de cabello Cachimbo EPIAM-2026-2</h3>
+                        <p class="text-slate-300 text-sm">Bienvenida y Paseo de Cachimbos por la Nueva Infraestructura y Circuito ecologico con sorpresas.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-gold-400 flex items-center justify-center text-gold-400 shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        7:30 PM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 font-semibold text-[10px] uppercase tracking-wider">Apertura de Puertas</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Alfombra Verde & Recepción Masquerade</h3>
+                        <p class="text-slate-300 text-sm">Bienvenida oficial con copa de honor eco-champagne, photocall profesional con antifaces y registro de invitados VIP.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-emerald-400 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                        <i class="fa-solid fa-flask-vial text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        8:30 PM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6 border-gold-400/40">
+                        <span class="px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 font-semibold text-[10px] uppercase tracking-wider">Momento Cumbre</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Ritual de Iniciación Cachimbo EPIAM-2026-2 </h3>
+                        <p class="text-slate-300 text-sm">Solemne ceremonia tradicional de bautizo y juramento para la nueva generación de alumnos de Ingeniería Ambiental.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4-->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-gold-400 flex items-center justify-center text-gold-400 shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+                        <i class="fa-solid fa-crown text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        9:00 PM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 font-semibold text-[10px] uppercase tracking-wider">Coronación</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Elección de Miss & Mister Cachimbo Ambiental 2026-2</h3>
+                        <p class="text-slate-300 text-sm">Presentación de candidatos y preguntas de los jurados y premiacion a los Miss & Mister más deslumbrante y sostenible, y revelación de Miss & Mister Cachimbo EPIAM-2026.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-emerald-400 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                        <i class="fa-solid fa-compact-disc text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        9:30 PM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 font-semibold text-[10px] uppercase tracking-wider">Hora Loca</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Hora Loca Bio-Luminosa & Guest DJs</h3>
+                        <p class="text-slate-300 text-sm">Lanzamiento de luces nocturnas y neón orgánico con sorpresas, mezclas en vivo de Reggaeton, Electrónica y pop.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 6 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-emerald-950 border-2 border-gold-400 flex items-center justify-center text-gold-400">
+                        <i class="fa-solid fa-moon text-xs"></i>
+                    </div>
+                    <div class="md:absolute md:-left-36 md:top-1.5 text-gold-400 font-cinzel font-bold text-lg mb-2 md:mb-0">
+                        12:00 AM
+                    </div>
+                    <div class="glass-card glass-card-hover rounded-2xl p-6">
+                        <span class="px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 font-semibold text-[10px] uppercase tracking-wider">Clausura</span>
+                        <h3 class="font-cinzel text-xl font-bold text-gold-300 mt-2 mb-1">Cierre Estelar & broche de oro</h3>
+                        <p class="text-slate-300 text-sm">Despedida estelar de la promocion de egresados del codigo 2026-2 en una noche inolvidable de compañerismo.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TICKETS & VIP PASSES SECTION -->
+        <section id="entradas" class="py-20 px-4 bg-gradient-to-b from-transparent via-emerald-950/60 to-transparent">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-bold">Reserva Tu Lugar</span>
+                    <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-gold-metallic mt-2">Pases & Entradas</h2>
+                    <p class="text-slate-300 mt-4 text-sm sm:text-base">Selecciona el tipo de entrada que mejor se adapte a tu experiencia. ¡Aforo limitado!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                    
+                    <!-- Pass 1: Cachimbo Free -->
+                    <div class="glass-card glass-card-hover rounded-3xl p-8 flex flex-col justify-between border-emerald-500/30">
+                        <div>
+                            <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Ingresantes 2026</div>
+                            <h3 class="font-cinzel text-2xl font-bold text-gold-300">Cachimbo Free Pass</h3>
+                            <div class="my-6">
+                                <span class="font-cinzel text-4xl font-black text-slate-100">S/ 0</span>
+                                <span class="text-xs text-slate-400 block mt-1">*Exclusivo para ingresantes verificados</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-300 border-t border-emerald-800/50 pt-6">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Entrada al evento gratis
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Cachimbo rapado pida su antifaz de cortesia
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Participación en la ceremonia de entrada
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Busque por su mesa de cachimbo vip
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="openRSVPModal('Cachimbo Free Pass', 0)" class="mt-8 w-full py-3.5 rounded-full bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 border border-emerald-500/50 font-cinzel font-bold text-xs uppercase tracking-wider transition-colors">
+                            Obtener Pase Cachimbo
+                        </button>
+                    </div>
+
+                    <!-- Pass 2: General Masquerade (FEATURED) -->
+                    <div class="glass-card glass-card-hover rounded-3xl p-8 flex flex-col justify-between border-2 border-gold-400 relative shadow-[0_0_35px_rgba(234,179,8,0.25)] bg-emerald-950/80">
+                        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-gold-400 to-amber-500 text-slate-950 font-bold text-[10px] uppercase tracking-widest shadow-md">
+                            Más Popular
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-2">Estudiantes & Invitados</div>
+                            <h3 class="font-cinzel text-2xl font-bold text-gold-metallic">General Masquerade</h3>
+                            <div class="my-6">
+                                <span class="font-cinzel text-4xl font-black text-gold-300">S/ 3</span>
+                                <span class="text-xs text-slate-400 block mt-1">Preventa especial hasta agotar stock</span>  
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-300 border-t border-gold-500/30 pt-6">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-gold-400"></i> Acceso a la zona bailable
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-gold-400"></i> No pierda sus entradas 
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-gold-400"></i> Antifaz Dorado Edición Limitada a la entrada
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-gold-400"></i> Entrada luego de la ceremonia de cachimbo
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="openRSVPModal('General Masquerade', 25)" class="mt-8 w-full py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-amber-400 to-gold-600 text-slate-950 font-cinzel font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-md">
+                            Reservar Entrada General
+                        </button>
+                    </div>
+
+                    <!-- Pass 3: Eco-VIP Lounge -->
+                    <div class="glass-card glass-card-hover rounded-3xl p-8 flex flex-col justify-between border-emerald-500/30">
+                        <div>
+                            <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Experiencia Premium</div>
+                            <h3 class="font-cinzel text-2xl font-bold text-gold-300">Eco-VIP Lounge</h3>
+                            <div class="my-6">
+                                <span class="font-cinzel text-4xl font-black text-slate-100">S/ 25</span>
+                                <span class="text-xs text-slate-400 block mt-1">Zona elevada & que incluye la cena</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-300 border-t border-emerald-800/50 pt-6">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Acceso Exclusivo con cena incluida
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Barra Libre de Coctelería de Autor (2 hrs) a S/ 60
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Antifaz Dorado Edición Limitada a la entrada
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> Meet & Greet con los DJs
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="openRSVPModal('Eco-VIP Lounge', 50)" class="mt-8 w-full py-3.5 rounded-full bg-emerald-900/80 hover:bg-emerald-800 text-gold-300 border border-gold-400/40 font-cinzel font-bold text-xs uppercase tracking-wider transition-colors">
+                            Reservar Pase VIP
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- MUSIC & PLAYLIST PREVIEW SECTION -->
+        <section class="py-12 px-4 max-w-5xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 border-gold-400/30 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-5">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-900/80 border border-gold-400/50 flex items-center justify-center text-gold-400 text-2xl shrink-0 shadow-lg">
+                            <i class="fa-solid fa-compact-disc animate-spin" style="animation-duration: 8s;"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">Playlist Oficial Cachimbo Ambiental 2026</span>
+                            <h3 class="font-cinzel text-xl font-bold text-gold-metallic">Noche de Antifaces - Mix Preview</h3>
+                            <p class="text-xs text-slate-300 mt-1">Siente la vibra musical que sonará en Asia Moluskin</p>
+                        </div>
+                    </div>
+
+                    <!-- Equalizer Visualizer & Audio Control -->
+                    <div class="flex items-center gap-6 w-full md:w-auto justify-end">
+                        <div class="flex items-end gap-1 h-8" id="equalizerBars">
+                            <span class="w-1.5 bg-emerald-400 rounded-t h-3 transition-all duration-300"></span>
+                            <span class="w-1.5 bg-gold-400 rounded-t h-7 transition-all duration-300"></span>
+                            <span class="w-1.5 bg-emerald-500 rounded-t h-4 transition-all duration-300"></span>
+                            <span class="w-1.5 bg-gold-300 rounded-t h-8 transition-all duration-300"></span>
+                            <span class="w-1.5 bg-emerald-400 rounded-t h-5 transition-all duration-300"></span>
+                        </div>
+                        <button onclick="toggleAudioPreview()" id="playAudioBtn" class="px-6 py-3 rounded-full bg-gold-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-400 transition-colors shadow-lg shrink-0">
+                            <i class="fa-solid fa-play" id="playIcon"></i>
+                            <span id="playText">Reproducir Beat</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION & VENUE SECTION -->
+        <section id="ubicacion" class="py-20 px-4 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Text Details -->
+                <div class="space-y-6">
+                    <span class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-bold">Sede del Evento</span>
+                    <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-gold-metallic">Asia Moluskin</h2>
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                        Ubicado en una zona privilegiada de Andahuaylas frente al Cuartel Los Chancas y exclusiva, <strong class="text-gold-300">Asia Moluskin</strong> ofrece amplios espacios al aire libre, áreas techadas con acabados de primera y un escenario rodeado de naturaleza perfecto para nuestra ambientación mística.
+                    </p>
+
+                    <!-- Features Info -->
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-gold-400 shrink-0 mt-1">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 text-sm">Dirección Oficial</h4>
+                                <p class="text-xs text-slate-300">Av. Malinas 1360, Andahuaylas 03701-Principal Asia Moluskin </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0 mt-1">
+                                <i class="fa-solid fa-bus-simple"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 text-sm">Buses de Traslado Eco-Bus</h4>
+                                <p class="text-xs text-slate-300">Transito de taxis por la Av. Malinas pasando el rio , por el Parque campesino-Andahuaylas</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-gold-400 shrink-0 mt-1">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 text-sm">Seguridad Privada & Estacionamiento</h4>
+                                <p class="text-xs text-slate-300">Estacionamiento privado y Estacionamiento gratuito en la calle.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="pt-4">
+                        <button onclick="openGoogleMapsModal()" class="px-8 py-3.5 rounded-full glass-card border border-gold-400/50 text-gold-300 hover:bg-emerald-900/50 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center gap-3 transition-all">
+                            <i class="fa-solid fa-map-location-dot text-lg text-emerald-400"></i>
+                            <span>Abrir Mapa de Ubicacion</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stylized Venue Card Simulation -->
+                <div class="glass-card rounded-3xl p-6 border-gold-400/40 relative overflow-hidden shadow-2xl">
+                    <div class="relative h-80 rounded-2xl overflow-hidden border border-emerald-500/30 bg-emerald-950/80 flex flex-col items-center justify-center text-center p-6">
+                        <!-- Stylized Decorative Background Lines -->
+                        <div class="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+                        
+                        <div class="w-20 h-20 rounded-full bg-darknight/80 border-2 border-gold-400 flex items-center justify-center text-gold-400 text-3xl mb-4 relative z-10 shadow-[0_0_20px_rgba(234,179,8,0.4)]">
+                            <i class="fa-solid fa-masks-theater"></i>
+                        </div>
+                        <h3 class="font-cinzel text-2xl font-bold text-gold-metallic relative z-10">ASIA MOLUSKIN</h3>
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase mt-1 relative z-10 font-semibold">Sede Principal de la Cachimbada</p>
+                        
+                        <div class="mt-6 flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-900/80 border border-emerald-400/40 text-xs text-slate-200 relative z-10">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Aforo Confirmado & Licencia Sostenible</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="py-20 px-4 max-w-4xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-bold">Resolvemos tus dudas</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-gold-metallic mt-2">Preguntas Frecuentes</h2>
+            </div>
+
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="glass-card rounded-2xl border-emerald-500/30 overflow-hidden">
+                    <button onclick="toggleFAQ(1)" class="w-full p-6 text-left font-cinzel font-bold text-gold-300 flex justify-between items-center gap-4">
+                        <span>¿Es obligatorio asistir con antifaz?</span>
+                        <i class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300" id="faqIcon1"></i>
+                    </button>
+                    <div id="faqAnswer1" class="px-6 pb-6 text-sm text-slate-300 hidden leading-relaxed">
+                        Sí, el antifaz es la temática central de la noche. Si no cuentas con uno, en la puerta de ingreso de Asia Moluskin dispondremos de una zona de antifaces de diseños variados para los asistentes.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="glass-card rounded-2xl border-emerald-500/30 overflow-hidden">
+                    <button onclick="toggleFAQ(2)" class="w-full p-6 text-left font-cinzel font-bold text-gold-300 flex justify-between items-center gap-4">
+                        <span>¿Cómo valido mi pase como Cachimbo 2026?</span>
+                        <i class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300" id="faqIcon2"></i>
+                    </button>
+                    <div id="faqAnswer2" class="px-6 pb-6 text-sm text-slate-300 hidden leading-relaxed">
+                        Al momento de reservar tu ticket 'Cachimbo Free Pass' e ingresar en la recepción, deberás presentar tu DNI o identificador de Cachimbo de Ingeniería Ambiental 2026-2.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="glass-card rounded-2xl border-emerald-500/30 overflow-hidden">
+                    <button onclick="toggleFAQ(3)" class="w-full p-6 text-left font-cinzel font-bold text-gold-300 flex justify-between items-center gap-4">
+                        <span>¿Por qué es un evento 100% Sostenible?</span>
+                        <i class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300" id="faqIcon3"></i>
+                    </button>
+                    <div id="faqAnswer3" class="px-6 pb-6 text-sm text-slate-300 hidden leading-relaxed">
+                        Como estudiantes de Ingeniería Ambiental, promovemos cero plásticos de un solo uso. Todos los vasos, cotillón y vajilla seran recolectados y dispuestos en el tacho o dispuesto para su reaprovechamiento.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    <!-- CIERRE: CONTACTO Y REDES -->
+        <section id="contacto" class="py-20 px-4 max-w-4xl mx-auto text-center">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border-gold-400/40 space-y-8">
+                <i class="fa-solid fa-masks-theater text-3xl text-gold-400"></i>
+                <h2 class="font-cinzel text-2xl sm:text-4xl font-bold text-gold-metallic leading-snug">Una noche para dejar huella y sentir la Aura universitaria, ¡no dejes que te lo cuenten!</h2>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.25em] text-emerald-400 font-bold mb-4">Reservar entrada al:</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="https://wa.me/51992493355?text=Hola%2C%20quisiera%20informacion%2C%20para%20reservar%20entradas%20para%203%20personas" target="_blank" rel="noopener" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-gold-600 text-slate-950 font-cinzel font-bold text-sm tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-3"><i class="fa-brands fa-whatsapp text-xl"></i>+51 992 493 355</a>
+                        <a href="https://wa.me/51961123629?text=Hola%2C%20quisiera%20informacion%2C%20para%20reservar%20entradas%20para%203%20personas" target="_blank" rel="noopener" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-gold-600 text-slate-950 font-cinzel font-bold text-sm tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-3"><i class="fa-brands fa-whatsapp text-xl"></i>+51 961 123 629</a>
+                    </div>
+                </div>
+                <div class="pt-8 border-t border-gold-500/20">
+                    <p class="text-xs uppercase tracking-[0.25em] text-gold-400 font-bold mb-4">Síguenos en nuestras cuentas</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <a href="https://web.facebook.com/profile.php?id=61594576072280" target="_blank" rel="noopener" class="flex items-center gap-2 px-5 py-2.5 rounded-full glass-card border border-gold-400/40 text-gold-300 hover:text-emerald-400 hover:border-emerald-400 text-sm font-semibold transition-all"><i class="fa-brands fa-facebook text-lg"></i>Facebook</a>
+                        <a href="https://www.tiktok.com/@cachimbada_epiam_2026_2?lang=es" target="_blank" rel="noopener" class="flex items-center gap-2 px-5 py-2.5 rounded-full glass-card border border-gold-400/40 text-gold-300 hover:text-emerald-400 hover:border-emerald-400 text-sm font-semibold transition-all"><i class="fa-brands fa-tiktok text-lg"></i>TikTok</a>
+                        <a href="https://www.instagram.com/epiamunajma2026/" target="_blank" rel="noopener" class="flex items-center gap-2 px-5 py-2.5 rounded-full glass-card border border-gold-400/40 text-gold-300 hover:text-emerald-400 hover:border-emerald-400 text-sm font-semibold transition-all"><i class="fa-brands fa-instagram text-lg"></i>Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RSVP / TICKET BOOKING MODAL -->
+    <div id="rsvpModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-darknight/80 backdrop-blur-xl hidden">
+        <div class="glass-card w-full max-w-lg rounded-3xl p-6 sm:p-8 border-gold-400/50 relative shadow-2xl animate-float max-h-[90vh] overflow-y-auto">
+            
+            <!-- Close Button -->
+            <button onclick="closeRSVPModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-emerald-950 border border-gold-400/40 text-gold-400 flex items-center justify-center hover:bg-gold-500 hover:text-slate-950 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Content State 1: Form -->
+            <div id="modalFormState">
+                <div class="text-center mb-6">
+                    <span class="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">Reserva de Pase Digital</span>
+                    <h3 class="font-cinzel text-2xl font-bold text-gold-metallic" id="modalTicketTitle">Entrada Masquerade</h3>
+                    <p class="text-xs text-slate-300 mt-1">Completa tus datos para generar tu ticket QR</p>
+                </div>
+
+                <form id="ticketBookingForm" onsubmit="handleTicketSubmission(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gold-300 font-semibold mb-1">Nombre Completo</label>
+                        <input type="text" required placeholder="Ej. Valeria Mendoza" class="w-full px-4 py-3 rounded-xl bg-darknight/90 border border-emerald-500/40 text-slate-100 text-sm focus:outline-none focus:border-gold-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gold-300 font-semibold mb-1">Correo Electrónico</label>
+                        <input type="email" required placeholder="valeria@ejemplo.com" class="w-full px-4 py-3 rounded-xl bg-darknight/90 border border-emerald-500/40 text-slate-100 text-sm focus:outline-none focus:border-gold-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gold-300 font-semibold mb-1">Estilo de Antifaz Elegido</label>
+                        <select id="modalMaskSelect" class="w-full px-4 py-3 rounded-xl bg-darknight/90 border border-emerald-500/40 text-slate-100 text-sm focus:outline-none focus:border-gold-400">
+                            <option value="Esmeralda Mística">Esmeralda Mística</option>
+                            <option value="Dorado Botánico">Dorado Botánico</option>
+                            <option value="Eco-Luxe Neón">Eco-Luxe Neón</option>
+                            <option value="Obsidiana Noche">Obsidiana Noche</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 rounded-full bg-gradient-to-r from-gold-500 via-amber-400 to-gold-600 text-slate-950 font-cinzel font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_rgba(234,179,8,0.4)]">
+                            Confirmar & Generar Mi Pase
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Content State 2: Ticket Confirmation -->
+            <div id="modalSuccessState" class="hidden text-center space-y-6">
+                <div class="w-16 h-16 rounded-full bg-emerald-950 border-2 border-gold-400 text-gold-400 flex items-center justify-center text-2xl mx-auto shadow-[0_0_20px_rgba(234,179,8,0.5)]">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">¡Reserva Confirmada!</span>
+                    <h3 class="font-cinzel text-2xl font-bold text-gold-metallic">Tu Pase VIP Generado</h3>
+                    <p class="text-xs text-slate-300 mt-1">Presenta esta credencial digital en el ingreso de Asia Moluskin</p>
+                </div>
+
+                <!-- Digital Pass Graphic Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-950 via-darknight to-petrol-900 border border-gold-400/60 text-left relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[9px] uppercase tracking-widest text-emerald-400 font-bold block">Evento Oficial</span>
+                            <span class="font-cinzel font-bold text-sm text-gold-300">Cachimbada Ambiental 2026-2</span>
+                        </div>
+                        <span id="ticketBadgeType" class="px-2.5 py-1 rounded-full bg-gold-500 text-slate-950 text-[9px] font-bold uppercase">General</span>
+                    </div>
+
+                    <div class="my-4 pt-3 border-t border-emerald-800/50">
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Titular</p>
+                        <p id="ticketHolderName" class="font-bold text-slate-100 text-base">Valeria Mendoza</p>
+                        <p id="ticketMaskStyle" class="text-xs text-gold-400 mt-1"><i class="fa-solid fa-mask"></i> Antifaz: Esmeralda Mística</p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-emerald-800/50">
+                        <div>
+                            <p class="text-[9px] text-slate-400 uppercase">Fecha & Lugar</p>
+                            <p class="text-xs font-semibold text-slate-200">16 Oct | Asia Moluskin</p>
+                        </div>
+                        
+                        <!-- Simulated QR Code -->
+                        <div class="w-12 h-12 bg-white p-1 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-qrcode text-slate-950 text-3xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="closeRSVPModal()" class="w-full py-3 rounded-full glass-card border border-gold-400/50 text-gold-300 font-cinzel font-bold text-xs uppercase tracking-wider hover:bg-emerald-900/40">
+                    Cerrar Credencial
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="border-t border-gold-500/20 bg-darknight py-12 px-4 relative z-10 text-center">
+        <div class="max-w-7xl mx-auto space-y-6">
+            
+            <div class="flex items-center justify-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-emerald-900/80 border border-gold-400/50 flex items-center justify-center text-gold-400">
+                    <i class="fa-solid fa-leaf text-xs"></i>
+                </div>
+                <span class="font-cinzel font-bold text-lg text-gold-metallic">ORGANIZA INGENIERÍA AMBIENTAL CODIGO: 2026-2</span>
+            </div>
+
+            <p class="text-xs text-slate-400 max-w-lg mx-auto">
+                Evento 100% Sostenible y Cero Desperdicio. Comprometidos con la conservación de nuestros ecosistemas y la diversión responsable.
+            </p>
+
+            <div class="flex justify-center gap-6 text-gold-400 text-lg pt-2">
+                <a href="https://www.instagram.com/epiamunajma2026/" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@cachimbada_epiam_2026_2?lang=es" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://web.facebook.com/profile.php?id=61594576072280" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://wa.me/51992493355?text=Hola%2C%20quisiera%20informacion%2C%20para%20reservar%20entradas%20para%203%20personas" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+
+            <div class="text-[10px] text-slate-500 pt-6 border-t border-slate-900">
+                &copy; 2026 Gran Cachimbada de Ingeniería Ambiental. Noche de Antifaces en Asia Moluskin. Todos los derechos reservados.
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT INTERACTIVE LOGIC -->
+    <script>
+        // --- 1. Real-Time Countdown Timer to October 16 ---
+        function updateCountdown() {
+            const now = new Date();
+            let targetYear = now.getFullYear();
+            let targetDate = new Date(`October 16, ${targetYear} 20:00:00`);
+
+            if (now > targetDate) {
+                targetDate = new Date(`October 16, ${targetYear + 1} 20:00:00`);
+            }
+
+            const diff = targetDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('timerDays').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('timerHours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('timerMinutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('timerSeconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 2. Interactive Mask Sparkles Canvas Particle System ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * -1.2 - 0.3;
+                this.color = Math.random() > 0.5 ? '#10b981' : '#facc15';
+                this.opacity = Math.random() * 0.7 + 0.3;
+                this.rotation = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += 0.02;
+
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                // Draw floating leaf shape
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size * 2, Math.PI / 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 18000);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        function triggerMaskSparkles(event) {
+            for (let i = 0; i < 25; i++) {
+                particles.push(new Particle(event.clientX, event.clientY));
+            }
+        }
+
+        // --- 3. Interactive Web Audio API Synthesizer Preview ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let synthInterval = null;
+
+        function toggleAudioPreview() {
+            const playIcon = document.getElementById('playIcon');
+            const playText = document.getElementById('playText');
+            const musicIcon = document.getElementById('musicIcon');
+
+            if (!isPlaying) {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                audioCtx.resume();
+                isPlaying = true;
+                
+                playIcon.className = "fa-solid fa-pause";
+                playText.innerText = "Pausar Beat";
+                musicIcon.className = "fa-solid fa-volume-high text-gold-400 animate-bounce";
+
+                // Generate synthesized luxury beat loop
+                let step = 0;
+                synthInterval = setInterval(() => {
+                    if (!isPlaying) return;
+                    
+                    // Bass hit
+                    if (step % 2 === 0) {
+                        playTone(110, 'sine', 0.2, 0.3);
+                    }
+                    // Melodic chime
+                    if (step % 4 === 0) {
+                        playTone(523.25, 'triangle', 0.1, 0.4); // C5
+                        playTone(659.25, 'triangle', 0.1, 0.4); // E5
+                    }
+                    step++;
+                }, 400);
+
+                animateEqualizer(true);
+
+            } else {
+                isPlaying = false;
+                if (synthInterval) clearInterval(synthInterval);
+                
+                playIcon.className = "fa-solid fa-play";
+                playText.innerText = "Reproducir Beat";
+                musicIcon.className = "fa-solid fa-music";
+                animateEqualizer(false);
+            }
+        }
+
+        function playTone(freq, type, duration, vol) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function animateEqualizer(active) {
+            const bars = document.querySelectorAll('#equalizerBars span');
+            bars.forEach(bar => {
+                if (active) {
+                    bar.style.height = `${Math.floor(Math.random() * 24 + 8)}px`;
+                } else {
+                    bar.style.height = '12px';
+                }
+            });
+            if (active && isPlaying) {
+                setTimeout(() => animateEqualizer(true), 250);
+            }
+        }
+
+        // --- 4. Mask Selection & Inspiration Logic ---
+        let currentSelectedMask = "Esmeralda Mística";
+
+        function selectMaskInspiration(title, desc) {
+            currentSelectedMask = title;
+            const detailBanner = document.getElementById('maskDetailBanner');
+            document.getElementById('maskDetailTitle').innerText = title;
+            document.getElementById('maskDetailDesc').innerText = desc;
+            detailBanner.classList.remove('hidden');
+            detailBanner.classList.add('flex');
+            detailBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function openRSVPModalWithMask() {
+            openRSVPModal("General Masquerade", 25);
+            document.getElementById('modalMaskSelect').value = currentSelectedMask;
+        }
+
+        // --- 5. Ticket Modal Logic ---
+        function openRSVPModal(ticketName, price) {
+            document.getElementById('modalTicketTitle').innerText = ticketName;
+            document.getElementById('ticketBadgeType').innerText = price === 0 ? "FREE PASS" : (price === 50 ? "VIP PASS" : "GENERAL");
+            document.getElementById('modalFormState').classList.remove('hidden');
+            document.getElementById('modalSuccessState').classList.add('hidden');
+            document.getElementById('rsvpModal').classList.remove('hidden');
+        }
+
+        function closeRSVPModal() {
+            document.getElementById('rsvpModal').classList.add('hidden');
+        }
+
+        function handleTicketSubmission(e) {
+            e.preventDefault();
+            const name = e.target.querySelector('input[type="text"]').value;
+            const mask = document.getElementById('modalMaskSelect').value;
+
+            document.getElementById('ticketHolderName').innerText = name;
+            document.getElementById('ticketMaskStyle').innerHTML = `<i class="fa-solid fa-mask"></i> Estilo: ${mask}`;
+
+            document.getElementById('modalFormState').classList.add('hidden');
+            document.getElementById('modalSuccessState').classList.remove('hidden');
+        }
+
+        // --- 6. FAQ Accordion Logic ---
+        function toggleFAQ(index) {
+            const answer = document.getElementById(`faqAnswer${index}`);
+            const icon = document.getElementById(`faqIcon${index}`);
+            
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- 7. Google Maps Modal Simulation ---
+        function openGoogleMapsModal() {
+            const query = encodeURIComponent("Asia Moluskin");
+            window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+        }
+    </script>
+<!-- Mix Preview: MP3 -->
+    <audio id="mixAudio" src="mix.mp3" loop preload="auto"></audio>
+    <script>
+        let mixTocado = false;
+        function toggleAudioPreview() {
+            mixTocado = true;
+            const a = document.getElementById('mixAudio');
+            const ui = (on) => {
+                document.getElementById('playIcon').className = on ? "fa-solid fa-pause" : "fa-solid fa-play";
+                document.getElementById('playText').innerText = on ? "Pausar Beat" : "Reproducir Beat";
+                document.getElementById('musicIcon').className = on ? "fa-solid fa-volume-high text-gold-400 animate-bounce" : "fa-solid fa-music";
+                isPlaying = on;
+                animateEqualizer(on);
+            };
+            if (a.paused) {
+                a.play().then(() => ui(true)).catch(() => alert("No se pudo reproducir. Revisa que mix.mp3 este en la misma carpeta que el HTML."));
+            } else {
+                a.pause();
+                ui(false);
+            }
+        }
+        if (false) {
+            const inicio = () => { if (!mixTocado) toggleAudioPreview(); };
+            document.addEventListener('click', inicio, { once: true });
+            document.addEventListener('keydown', inicio, { once: true });
+        }
+    </script>
+</body>
+</html>
